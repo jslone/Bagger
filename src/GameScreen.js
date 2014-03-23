@@ -4,6 +4,8 @@ import ui.TextView;
 import src.Grocery as Grocery;
 import src.Bag as Bag;
 
+var dpi=Math.max(device.width,device.height)/8;
+
 exports = Class(ui.View,function(supr) {
   this.init = function(opts) {
     //engine logic
@@ -20,9 +22,8 @@ exports = Class(ui.View,function(supr) {
       superview: this,
       x: 0,
       y: 0,
-      width:200,
-      height:100,
-      size:30,
+      width:dpi,
+      height:dpi/2,
       color: '#fff'
     });
 
@@ -39,11 +40,11 @@ exports = Class(ui.View,function(supr) {
     this._groceries = [];
     this._score = 0;
     this._deltaTime = 30;
-    this._deltaTimeSpawn = 4000;
+    this._deltaTimeSpawn = 2000;
     this._gameOn = true;
     this._Bag = new Bag({
       x:0,
-      y:100
+      y:dpi
     });
     this.addSubview(this._Bag);
 
@@ -54,12 +55,11 @@ exports = Class(ui.View,function(supr) {
   this.spawn = function () {
     var grocery = new Grocery({
       x: Math.random() > 0.5 ? 0 : device.width,
-      y: 300
+      y: dpi*2
     });
     grocery.on('grocery:fall',bind(this,function() {
       if(this._gameOn) {
         this._gameOn = false;
-        clearInterval(this._gameLoop);
         clearInterval(this._spawnLoop);
         this.emit('gameScreen:end');
       }

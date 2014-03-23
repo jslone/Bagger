@@ -1,21 +1,24 @@
 import device
 import ui.View
 
+var dpi=Math.max(device.width,device.height)/8;
+
 exports = Class(ui.View,function(supr) {
   this.init = function(opts) {
     opts = merge(opts, {
-      width:300,
-      height:200,
+      width:dpi*2,
+      height:dpi,
       backgroundColor: '#A68425'
     });
 
     supr(this,'init',[opts]);
 
-    this.dx = 200;
+    this.dx = dpi/256;
   }
 
   this.tick = function(dt) {
-    this.style.x = (this.dx * dt)/500 + this.style.x % device.width;
+    var invSpeedScale = dpi;
+    this.style.x = (this.dx * dt + this.style.x) % device.width;
   }
 
   this.isOverlapping = function(pt) {

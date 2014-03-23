@@ -1,11 +1,13 @@
 import device;
 import ui.View;
 
+var dpi=Math.max(device.width,device.height)/8;
+
 exports = Class(ui.View,function(supr) {
   this.init = function(opts) {
     opts = merge(opts, {
-      width: 256,
-      height: 256,
+      width: dpi,
+      height: dpi,
       backgroundColor:'red'
     });
 
@@ -14,18 +16,18 @@ exports = Class(ui.View,function(supr) {
     this._imgView = new ui.View({
       superview: this,
       clip: true,
-      x: 64,
-      y: 64,
-      width: 128,
-      height: 128,
+      x: dpi/4,
+      y: dpi/4,
+      width: dpi/2,
+      height: dpi/2,
       backgroundColor: 'green'
     });
 
     //tweak these
-    this.dx = (this.style.x ? -1 : 1) * (Math.random() * 100 + 100);
+    this.dx = (this.style.x ? -1 : 1) * (Math.random() * dpi/256 + dpi/256);
     this.dy = 0;
     this.ddx = 0;
-    this.ddy = 100;
+    this.ddy = dpi/65536;
 
     var that = this;
     this.on('InputSelect',function(evt,pt) {
@@ -33,7 +35,7 @@ exports = Class(ui.View,function(supr) {
       var x = this.style.width/2 - pt.x;
       var y = -(this.style.width-pt.y);
       var len = Math.sqrt(x*x + y*y);
-      var scalar = 600/len;
+      var scalar = dpi/(64*len);
       var ratio = device.width / device.height;
       that.dx = ratio * scalar * x;
       that.dy = scalar * y;
@@ -41,11 +43,10 @@ exports = Class(ui.View,function(supr) {
   }
 
   this.tick = function(dt) {
-    var x = (this.dx * dt)/1000 + this.style.x;
-    var y = (this.dy * dt)/1000 + this.style.y;
-    this.style.update({x:x,y:y});
-    this.dx += (this.ddx * dt)/1000;
-    this.dy += (this.ddy * dt)/1000;
+    this.style.x += (this.dx * dt);
+    this.style.y += (this.dy * dt);
+    this.dx += (this.ddx * dt);
+    this.dy += (this.ddy * dt);
     if(this.style.y > device.height) {
       this.emit('grocery:fall');
     }
