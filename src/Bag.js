@@ -15,8 +15,7 @@ exports = Class(ui.View,function(supr) {
   }
 
   this.tick = function(dt) {
-    var x = (this.dx * dt)/500 + this.style.x % (device.width*2);
-    this.style.update({x:x});
+    this.style.x = (this.dx * dt)/500 + this.style.x % device.width;
   }
 
   this.isOverlapping = function(pt) {

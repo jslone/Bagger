@@ -39,7 +39,7 @@ exports = Class(ui.View,function(supr) {
     this._groceries = [];
     this._score = 0;
     this._deltaTime = 30;
-    this._deltaTimeSpawn = 1000;
+    this._deltaTimeSpawn = 4000;
     this._gameOn = true;
     this._Bag = new Bag({
       x:0,
@@ -48,8 +48,6 @@ exports = Class(ui.View,function(supr) {
     this.addSubview(this._Bag);
 
     this.updateScoreboard();
-
-    this._gameLoop = setInterval(bind(this,this.tick),this._deltaTime);
     this._spawnLoop = setInterval(bind(this,this.spawn),this._deltaTimeSpawn);
   }
 
@@ -70,12 +68,11 @@ exports = Class(ui.View,function(supr) {
     this._groceries.push(grocery);
   }
 
-  this.tick = function () {
+  this.tick = function (dt) {
     for(var i = 0; i < this._groceries.length; i++) {
-      this._groceries[i].tick(this._deltaTime*this._gameSpeed);
       var x = this._groceries[i].style.x + this._groceries[i].style.width/2;
       var y = this._groceries[i].style.y + this._groceries[i].style.height/2;
-      if(this._Bag.isOverlapping({x:x,y:y})) {
+      if(this._Bag.isOverlapping(this._groceries[i].style)) {
         this.removeSubview(this._groceries[i]);
         this._groceries.splice(i,1);
         i--;
