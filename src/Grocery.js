@@ -8,7 +8,8 @@ exports = Class(ui.ImageView,function(supr) {
     var images = [
       'resources/images/groceries/milk.png',
       'resources/images/groceries/spuds.png',
-      'resources/images/groceries/noods.png'
+      'resources/images/groceries/noods.png',
+      'resources/images/groceries/chicken.png'
     ]
 
     opts = merge(opts, {
