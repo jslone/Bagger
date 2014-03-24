@@ -20,12 +20,23 @@ exports = Class(ui.ImageView,function(supr) {
 
     supr(this,'init',[opts])
 
+    this._highScore = localStorage.getItem("highScore") || 0;
+
     //game views
+    this._highScoreboard = new ui.TextView({
+      superview:this,
+      x: 0,
+      y: 0,
+      width:device.width,
+      height:dpi/2,
+      color: '#fff',
+      text:'High Score: ' + this._highScore,
+    });
     this._scoreboard = new ui.TextView({
       superview: this,
       x: 0,
-      y: 0,
-      width:dpi,
+      y: dpi/2,
+      width:device.width,
       height:dpi/2,
       color: '#fff'
     });
@@ -77,7 +88,6 @@ exports = Class(ui.ImageView,function(supr) {
         clearInterval(this._spawnLoop);
         Sound.getSound().play('drop');
         this.end_game_flow();
-        this.emit('gameScreen:end');
       }
     }));
     this.addSubview(grocery);
@@ -104,11 +114,32 @@ exports = Class(ui.ImageView,function(supr) {
     }
   }
 
+  var finalScore = new ui.TextView({
+    x:dpi,
+    y:device.height/2 - dpi,
+    width:device.width - 2*dpi,
+    height: 2*dpi,
+    color:'#fff'
+  });
+
   this.end_game_flow = function () {
+    var highScore = this._score > this._highScore;
+    if(highScore) {
+      this._highScore = this._score;
+      localStorage.setItem("highScore",this._highScore);
+      this._highScoreboard.setText("High Score: " + this._highScore);
+    }
     this._groceriesAvailable = this._groceriesAvailable.concat(this._groceries);
     for(var i = 0; i < this._groceries.length; i++) {
       this.removeSubview(this._groceries[i]);
     }
     this._groceries = [];
+
+    finalScore.setText((highScore ? "High Score: " : "Score: ") + this._score);
+    this.addSubview(finalScore);
+    setTimeout(bind(this,function () {
+      this.removeSubview(finalScore);
+      this.emit('gameScreen:end');
+    }),1500);
   }
 });
