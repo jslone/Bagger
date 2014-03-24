@@ -8,6 +8,8 @@
 //devkit imports
 import device;
 import ui.StackView as StackView;
+//ads
+import plugins.appflood.appFlood as appFlood;
 //game imports
 import src.Sound as Sound;
 import src.MenuScreen as MenuScreen;
@@ -38,6 +40,8 @@ exports = Class(GC.Application, function() {
     //Add the menu screen to the stack view
     rootView.push(menuScreen);
 
+    this._adCount = 0;
+
     /************************
      * Setup event listeners
      ************************/
@@ -47,9 +51,20 @@ exports = Class(GC.Application, function() {
      * gameScreen know it has been started
      */
     menuScreen.on('menuScreen:start',function() {
-      Sound.getSound().play('levelmusic');
-      rootView.push(gameScreen);
-      gameScreen.emit('app:start');
+      if(!this._adCount) {
+        this._adCount = 5;
+        appFlood.showInterstitial(function() {
+          Sound.getSound().play('levelmusic');
+          rootView.push(gameScreen);
+          gameScreen.emit('app:start');
+        });
+      }
+      else {
+        this._adCount--;
+        Sound.getSound().play('levelmusic');
+        rootView.push(gameScreen);
+        gameScreen.emit('app:start');
+      }
     });
 
     menuScreen.on('menuScreen:credits',function() {

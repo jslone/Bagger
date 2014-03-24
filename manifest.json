@@ -35,5 +35,8 @@
 			"renderGloss": true
 		}
 	},
-	"sdkVersion": "release-0.1.45"
+	"sdkVersion": "release-0.1.45",
+	"addons" : [
+		"appflood"
+	]
 }
