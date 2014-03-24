@@ -57,8 +57,8 @@ exports = Class(ui.ImageView,function(supr) {
 
   this.spawn = function () {
     var grocery = null;
-    if(this._groceriesAvailable.length > 5) { // don't keep all the same groceries
-      grocery = this._groceriesAvailable.pop();
+    if(this._groceriesAvailable.length > 10) { // don't keep all the same groceries
+      grocery = this._groceriesAvailable.shift();
       grocery.style.x = Math.random() > 0.5 ? 0 : device.width;
       grocery.style.y = dpi*2;
       grocery.grocery_init();
