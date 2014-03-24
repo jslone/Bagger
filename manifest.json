@@ -3,9 +3,7 @@
 	"shortName": "bagger",
 	"title": "Bagger",
 	"studio": {
-		"name": "Example Studio Name",
-		"domain": "studio.example.com",
-		"stagingDomain": "staging.example.com"
+		"name": "Jacob Slone"
 	},
 	"supportedOrientations": [
 		"portrait"
@@ -13,7 +11,8 @@
 	"description": "",
 	"icon": "resources/icons/icon512.png",
 	"splash": {
-		"autoHide": true
+		"autoHide": true,
+		"universal": "resources/splash/universal.png"
 	},
 	"android": {
 		"versionCode": 1,
