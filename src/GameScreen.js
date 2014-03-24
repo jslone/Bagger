@@ -11,8 +11,10 @@ exports = Class(ui.ImageView,function(supr) {
   this.init = function(opts) {
     //engine logic
     opts = merge(opts, {
-      x: 0,
-      y: 0,
+      x: -Math.max(0,(device.height-device.width)/2),
+      y: -Math.max(0,(device.width-device.height)/2),
+      width: Math.max(device.width,device.height),
+      height: Math.max(device.width,device.height),
       image: 'resources/images/backgrounds/gameScreen.png'
     });
 

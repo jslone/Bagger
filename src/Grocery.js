@@ -36,7 +36,7 @@ exports = Class(ui.ImageView,function(supr) {
 
   this.grocery_init = function () {
     //tweak these
-    this.dx = (this.style.x ? -1 : 1) * (Math.random() * dpi/256 + dpi/256);
+    this.dx = (this.style.x < 0 ? -1 : 1) * (Math.random() * dpi/256 + dpi/256);
     this.dy = 0;
     this.ddx = 0;
     this.ddy = dpi/65536;

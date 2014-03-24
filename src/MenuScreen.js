@@ -1,35 +1,40 @@
 import device;
-import ui.View;
+import ui.ImageView;
 import ui.TextView;
 
-exports = Class(ui.View,function(supr) {
+var dpi=Math.max(device.width,device.height)/8;
+
+exports = Class(ui.ImageView,function(supr) {
   this.init = function(opts) {
     opts = merge(opts, {
-      x: 0,
-      y: 0,
-      backgroundColor: '#FFDA73'
+      x: -Math.max(0,(device.height-device.width)/2),
+      y: -Math.max(0,(device.width-device.height)/2),
+      width: Math.max(device.width,device.height),
+      height: Math.max(device.width,device.height),
+      backgroundColor: '#FFDA73',
+      image: 'resources/images/backgrounds/menuScreen.png'
     });
 
     supr(this,'init',[opts])
 
     var startButton = new ui.TextView({
       superview: this,
-      x: device.width / 2 - 100,
-      y: device.height / 2,
-      width: 200,
-      height: 100,
+      x: device.width / 2 - dpi/2,
+      y: device.height / 2 + dpi,
+      width: dpi,
+      height: dpi/2,
       text: 'Start',
-      backgroundColor: '#A68425'
+      size:dpi
     });
 
     var creditButton = new ui.TextView({
       superview: this,
-      x: device.width / 2 - 100,
-      y: device.height / 2 + 150,
-      width: 200,
-      height: 100,
+      x: device.width / 2 - dpi/2,
+      y: startButton.style.y + dpi,
+      width: dpi,
+      height: dpi/2,
       text: 'Credits',
-      backgroundColor: '#A68425'
+      size:dpi
     });
 
     startButton.on('InputSelect',bind(this,function() {
