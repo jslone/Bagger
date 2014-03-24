@@ -1,6 +1,7 @@
 import device;
 import ui.ImageView;
 import ui.TextView;
+import src.Sound as Sound;
 import src.Grocery as Grocery;
 import src.Bag as Bag;
 
@@ -73,6 +74,7 @@ exports = Class(ui.ImageView,function(supr) {
       if(this._gameOn) {
         this._gameOn = false;
         clearInterval(this._spawnLoop);
+        Sound.getSound().play('drop');
         this.end_game_flow();
         this.emit('gameScreen:end');
       }
@@ -87,6 +89,7 @@ exports = Class(ui.ImageView,function(supr) {
         var x = this._groceries[i].style.x + this._groceries[i].style.width/2;
         var y = this._groceries[i].style.y + this._groceries[i].style.height/2;
         if(this._Bag.isOverlapping(this._groceries[i].style)) {
+          Sound.getSound().play('bag');
           this.removeSubview(this._groceries[i]);
           this._groceriesAvailable.push(this._groceries[i]);
           this._groceries.splice(i,1);

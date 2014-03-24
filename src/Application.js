@@ -9,6 +9,7 @@
 import device;
 import ui.StackView as StackView;
 //game imports
+import src.Sound as Sound;
 import src.MenuScreen as MenuScreen;
 import src.GameScreen as GameScreen;
 
@@ -44,12 +45,14 @@ exports = Class(GC.Application, function() {
      * gameScreen know it has been started
      */
     menuScreen.on('menuScreen:start',function() {
+      Sound.getSound().play('levelmusic');
       rootView.push(gameScreen);
       gameScreen.emit('app:start');
     });
 
     //when the game has ended, switch back to the menu screen
     gameScreen.on('gameScreen:end', function() {
+      Sound.getSound().stop('levelmusic');
       rootView.pop();
     });
   }

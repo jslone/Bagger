@@ -17,8 +17,6 @@ exports = Class(ui.ImageView,function(supr) {
       image: images[Math.floor(Math.random() * images.length)]
     });
 
-    console.log(opts.image);
-
     supr(this,'init',[opts]);
 
     var that = this;
