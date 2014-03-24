@@ -1,33 +1,24 @@
 import device;
-import ui.View;
+import ui.ImageView
 
-var dpi=Math.max(device.width,device.height)/8;
+var dpi=Math.max(device.width,device.height)/4;
 
-exports = Class(ui.View,function(supr) {
+exports = Class(ui.ImageView,function(supr) {
   this.init = function(opts) {
+    var images = [
+      'resources/images/groceries/milk.png',
+      'resources/images/groceries/spuds.png'
+    ]
+
     opts = merge(opts, {
       width: dpi,
       height: dpi,
-      backgroundColor:'red'
+      image: images[Math.floor(Math.random() * images.length)]
     });
+
+    console.log(opts.image);
 
     supr(this,'init',[opts]);
-
-    this._imgView = new ui.View({
-      superview: this,
-      clip: true,
-      x: dpi/4,
-      y: dpi/4,
-      width: dpi/2,
-      height: dpi/2,
-      backgroundColor: 'green'
-    });
-
-    //tweak these
-    this.dx = (this.style.x ? -1 : 1) * (Math.random() * dpi/256 + dpi/256);
-    this.dy = 0;
-    this.ddx = 0;
-    this.ddy = dpi/65536;
 
     var that = this;
     this.on('InputSelect',function(evt,pt) {
@@ -40,13 +31,31 @@ exports = Class(ui.View,function(supr) {
       that.dx = ratio * scalar * x;
       that.dy = scalar * y;
     });
+    this.grocery_init();
+  }
+
+  this.grocery_init = function () {
+    //tweak these
+    this.dx = (this.style.x ? -1 : 1) * (Math.random() * dpi/256 + dpi/256);
+    this.dy = 0;
+    this.ddx = 0;
+    this.ddy = dpi/65536;
   }
 
   this.tick = function(dt) {
+    dt /= 2;
     this.style.x += (this.dx * dt);
     this.style.y += (this.dy * dt);
     this.dx += (this.ddx * dt);
     this.dy += (this.ddy * dt);
+    if(this.style.x < 0) {
+      this.style.x = 0;
+      this.dx = Math.abs(this.dx);
+    }
+    if(this.style.x + this.style.width > device.width) {
+      this.style.x = device.width - this.style.width;
+      this.dx = - Math.abs(this.dx);
+    }
     if(this.style.y > device.height) {
       this.emit('grocery:fall');
     }

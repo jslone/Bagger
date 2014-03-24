@@ -49,12 +49,9 @@ exports = Class(GC.Application, function() {
     });
 
     //when the game has ended, switch back to the menu screen
-    function gameOver () {
+    gameScreen.on('gameScreen:end', function() {
       rootView.pop();
-      gameScreen = new GameScreen();
-      gameScreen.on('gameScreen:end',gameOver);
-    }
-    gameScreen.on('gameScreen:end', gameOver);
+    });
   }
 
   this.launchUI = function () {};
