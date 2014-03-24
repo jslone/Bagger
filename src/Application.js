@@ -12,13 +12,15 @@ import ui.StackView as StackView;
 import src.Sound as Sound;
 import src.MenuScreen as MenuScreen;
 import src.GameScreen as GameScreen;
+import src.CreditScreen as CreditScreen;
 
 //initialize application as GC.Application and export
 exports = Class(GC.Application, function() {
 
   this.initUI = function() {
-    var menuScreen = new MenuScreen();
-        gameScreen = new GameScreen();
+    var menuScreen = new MenuScreen(),
+        gameScreen = new GameScreen(),
+        creditScreen = new CreditScreen();
 
     this.view.backgroundColor = '#FFDA73'
 
@@ -50,9 +52,18 @@ exports = Class(GC.Application, function() {
       gameScreen.emit('app:start');
     });
 
+    menuScreen.on('menuScreen:credits',function() {
+      rootView.push(creditScreen);
+    });
+
     //when the game has ended, switch back to the menu screen
     gameScreen.on('gameScreen:end', function() {
       Sound.getSound().stop('levelmusic');
+      rootView.pop();
+    });
+
+    //when back signal sent, switch back to the menu screen
+    creditScreen.on('creditScreen:end',function() {
       rootView.pop();
     });
   }

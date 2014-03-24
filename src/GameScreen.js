@@ -29,11 +29,10 @@ exports = Class(ui.ImageView,function(supr) {
     });
 
     this._Bag = new Bag({
+      superview:this,
       x:0,
       y:dpi
     });
-
-    this.addSubview(this._Bag);
 
     this.on('app:start',bind(this,this.start_game_flow));
   }
