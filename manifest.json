@@ -21,11 +21,13 @@
 			"48": "resources/icons/android48.png",
 			"72": "resources/icons/android72.png",
 			"96": "resources/icons/android96.png"
-		}
+		},
+		"appFloodAppKey" : "DlNqjeytYV5jcDGH",
+		"appFloodSecretKey" : "2jev9cPc3954L5330e913"
 	},
 	"ios": {
-		"bundleID": "",
-		"appleID": "12345678",
+		"bundleID": "com.slogames.bagger",
+		"appleID": "RN58VLV7HS.com.slogames.bagger",
 		"version": "1.0.0",
 		"icons": {
 			"57": "resources/icons/ios57.png",
@@ -33,7 +35,9 @@
 			"114": "resources/icons/ios114.png",
 			"144": "resources/icons/ios144.png",
 			"renderGloss": true
-		}
+		},
+		"appFloodAppKey" : "Pz9ZXd61T6RVgPVC",
+		"appFloodSecretKey" : "e91eqUIz395aL5331074f"
 	},
 	"sdkVersion": "release-0.1.45",
 	"addons" : [
