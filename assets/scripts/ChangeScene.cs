@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class ChangeScene : MonoBehaviour {
-	public Object prevScene;
-	public Object scene;
+	public string prevScene;
+	public string scene;
 
 	// Use this for initialization
 	void Start () {
@@ -13,15 +13,15 @@ public class ChangeScene : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.Escape)) {
-			if(prevScene == null) {
+			if(prevScene.Length == 0) {
 				Application.Quit();
 			} else {
-				Application.LoadLevel(prevScene.name);
+				Application.LoadLevel(prevScene);
 			}
 		}
 	}
 
 	public void LoadLevel() {
-		Application.LoadLevel(scene.name);
+		Application.LoadLevel(scene);
 	}
 }
